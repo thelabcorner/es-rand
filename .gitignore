@@ -1,0 +1,6 @@
+node_modules/
+dist/
+release/
+tests/.*.bundle.mjs
+*.tmp
+.DS_Store

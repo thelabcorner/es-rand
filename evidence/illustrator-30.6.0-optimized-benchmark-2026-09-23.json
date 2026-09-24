@@ -1,0 +1,591 @@
+{
+  "generatedAt": "2026-09-24T02:29:59.224Z",
+  "runs": 3,
+  "host": "Adobe Illustrator 30.6.0",
+  "engine": "4.5.6",
+  "timer": {
+    "lane": "engine",
+    "engine": "4.5.6",
+    "wrapPolicy": "correct",
+    "primed": true,
+    "reads": 1149,
+    "calibratedUs": 0
+  },
+  "aggregation": "median of per-run ESTIMER medians",
+  "lanes": [
+    {
+      "lane": "Math.random",
+      "batch": 1000,
+      "medianOfMedianUs": 313,
+      "medianUsPerOp": 0.313,
+      "minUsPerOpAcrossRuns": 0.313,
+      "maxUsPerOpAcrossRuns": 0.313,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        0.313,
+        0.313,
+        0.313
+      ]
+    },
+    {
+      "lane": "ESRAND.create(number)x1",
+      "batch": 1,
+      "medianOfMedianUs": 16,
+      "medianUsPerOp": 16,
+      "minUsPerOpAcrossRuns": 15,
+      "maxUsPerOpAcrossRuns": 17,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "lane": "ESRAND.create(number)x5",
+      "batch": 5,
+      "medianOfMedianUs": 65,
+      "medianUsPerOp": 13,
+      "minUsPerOpAcrossRuns": 13,
+      "maxUsPerOpAcrossRuns": 21.6,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        13,
+        21.6,
+        13
+      ]
+    },
+    {
+      "lane": "ESRAND.create(number)x25",
+      "batch": 25,
+      "medianOfMedianUs": 313,
+      "medianUsPerOp": 12.52,
+      "minUsPerOpAcrossRuns": 12.48,
+      "maxUsPerOpAcrossRuns": 13.12,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        12.52,
+        13.12,
+        12.48
+      ]
+    },
+    {
+      "lane": "ESRAND.create(string16)x1",
+      "batch": 1,
+      "medianOfMedianUs": 49,
+      "medianUsPerOp": 49,
+      "minUsPerOpAcrossRuns": 47,
+      "maxUsPerOpAcrossRuns": 84,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        47,
+        49,
+        84
+      ]
+    },
+    {
+      "lane": "ESRAND.create(string16)x25",
+      "batch": 25,
+      "medianOfMedianUs": 1089,
+      "medianUsPerOp": 43.56,
+      "minUsPerOpAcrossRuns": 43.36,
+      "maxUsPerOpAcrossRuns": 49.32,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        43.36,
+        49.32,
+        43.56
+      ]
+    },
+    {
+      "lane": "ESRAND.create(string64)x1",
+      "batch": 1,
+      "medianOfMedianUs": 114,
+      "medianUsPerOp": 114,
+      "minUsPerOpAcrossRuns": 114,
+      "maxUsPerOpAcrossRuns": 191,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        114,
+        191,
+        114
+      ]
+    },
+    {
+      "lane": "ESRAND.uint32",
+      "batch": 1000,
+      "medianOfMedianUs": 1574,
+      "medianUsPerOp": 1.574,
+      "minUsPerOpAcrossRuns": 1.555,
+      "maxUsPerOpAcrossRuns": 1.967,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        1.555,
+        1.967,
+        1.574
+      ]
+    },
+    {
+      "lane": "ESRAND.random53",
+      "batch": 1000,
+      "medianOfMedianUs": 2379,
+      "medianUsPerOp": 2.379,
+      "minUsPerOpAcrossRuns": 2.363,
+      "maxUsPerOpAcrossRuns": 2.517,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        2.363,
+        2.517,
+        2.379
+      ]
+    },
+    {
+      "lane": "ESRAND.random32",
+      "batch": 1000,
+      "medianOfMedianUs": 1626,
+      "medianUsPerOp": 1.626,
+      "minUsPerOpAcrossRuns": 1.607,
+      "maxUsPerOpAcrossRuns": 2.575,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        1.607,
+        2.575,
+        1.626
+      ]
+    },
+    {
+      "lane": "ESRAND.float(-2.5,9.25)",
+      "batch": 1000,
+      "medianOfMedianUs": 3294,
+      "medianUsPerOp": 3.294,
+      "minUsPerOpAcrossRuns": 3.294,
+      "maxUsPerOpAcrossRuns": 4.655,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        3.294,
+        4.655,
+        3.294
+      ]
+    },
+    {
+      "lane": "ESRAND.float32(-2.5,9.25)",
+      "batch": 1000,
+      "medianOfMedianUs": 2570,
+      "medianUsPerOp": 2.57,
+      "minUsPerOpAcrossRuns": 2.53,
+      "maxUsPerOpAcrossRuns": 2.879,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        2.57,
+        2.879,
+        2.53
+      ]
+    },
+    {
+      "lane": "ESRAND.int(0,999)",
+      "batch": 1000,
+      "medianOfMedianUs": 2585,
+      "medianUsPerOp": 2.585,
+      "minUsPerOpAcrossRuns": 2.583,
+      "maxUsPerOpAcrossRuns": 3.788,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        2.583,
+        3.788,
+        2.585
+      ]
+    },
+    {
+      "lane": "ESRAND.int(1e12,+999)",
+      "batch": 1000,
+      "medianOfMedianUs": 3420,
+      "medianUsPerOp": 3.42,
+      "minUsPerOpAcrossRuns": 3.395,
+      "maxUsPerOpAcrossRuns": 4.186,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        3.395,
+        4.186,
+        3.42
+      ]
+    },
+    {
+      "lane": "ESRAND.bool",
+      "batch": 1000,
+      "medianOfMedianUs": 1577,
+      "medianUsPerOp": 1.577,
+      "minUsPerOpAcrossRuns": 1.571,
+      "maxUsPerOpAcrossRuns": 2.609,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        1.577,
+        2.609,
+        1.571
+      ]
+    },
+    {
+      "lane": "ESRAND.chance(.25)",
+      "batch": 1000,
+      "medianOfMedianUs": 2846,
+      "medianUsPerOp": 2.846,
+      "minUsPerOpAcrossRuns": 2.839,
+      "maxUsPerOpAcrossRuns": 4.698,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        2.846,
+        4.698,
+        2.839
+      ]
+    },
+    {
+      "lane": "ESRAND.choice(16)",
+      "batch": 1000,
+      "medianOfMedianUs": 2654,
+      "medianUsPerOp": 2.654,
+      "minUsPerOpAcrossRuns": 2.637,
+      "maxUsPerOpAcrossRuns": 3.487,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        2.637,
+        3.487,
+        2.654
+      ]
+    },
+    {
+      "lane": "ESRAND.shuffle(64)-core",
+      "batch": 25,
+      "medianOfMedianUs": 2080,
+      "medianUsPerOp": 83.2,
+      "minUsPerOpAcrossRuns": 83,
+      "maxUsPerOpAcrossRuns": 83.56,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        83.56,
+        83.2,
+        83
+      ]
+    },
+    {
+      "lane": "ESRAND.shuffled(64)",
+      "batch": 25,
+      "medianOfMedianUs": 2517,
+      "medianUsPerOp": 100.68,
+      "minUsPerOpAcrossRuns": 100,
+      "maxUsPerOpAcrossRuns": 110.16,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        100.68,
+        110.16,
+        100
+      ]
+    },
+    {
+      "lane": "ESRAND.sample(64,8)",
+      "batch": 25,
+      "medianOfMedianUs": 445,
+      "medianUsPerOp": 17.8,
+      "minUsPerOpAcrossRuns": 17.76,
+      "maxUsPerOpAcrossRuns": 18,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        18,
+        17.8,
+        17.76
+      ]
+    },
+    {
+      "lane": "ESRAND.sample(1000,8)",
+      "batch": 25,
+      "medianOfMedianUs": 486,
+      "medianUsPerOp": 19.44,
+      "minUsPerOpAcrossRuns": 19.4,
+      "maxUsPerOpAcrossRuns": 19.72,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        19.4,
+        19.44,
+        19.72
+      ]
+    },
+    {
+      "lane": "ESRAND.sample(10000,8)",
+      "batch": 10,
+      "medianOfMedianUs": 482,
+      "medianUsPerOp": 48.2,
+      "minUsPerOpAcrossRuns": 48.1,
+      "maxUsPerOpAcrossRuns": 48.3,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        48.3,
+        48.2,
+        48.1
+      ]
+    },
+    {
+      "lane": "ESRAND.sample(1000,500)",
+      "batch": 5,
+      "medianOfMedianUs": 5696,
+      "medianUsPerOp": 1139.2,
+      "minUsPerOpAcrossRuns": 1110.6,
+      "maxUsPerOpAcrossRuns": 1165,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        1110.6,
+        1165,
+        1139.2
+      ]
+    },
+    {
+      "lane": "ESRAND.bytes(64)",
+      "batch": 100,
+      "medianOfMedianUs": 2692,
+      "medianUsPerOp": 26.92,
+      "minUsPerOpAcrossRuns": 26.9,
+      "maxUsPerOpAcrossRuns": 27.12,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        26.92,
+        26.9,
+        27.12
+      ]
+    },
+    {
+      "lane": "ESRAND.hex(64)",
+      "batch": 100,
+      "medianOfMedianUs": 2533,
+      "medianUsPerOp": 25.33,
+      "minUsPerOpAcrossRuns": 25.14,
+      "maxUsPerOpAcrossRuns": 26.86,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        25.14,
+        25.33,
+        26.86
+      ]
+    },
+    {
+      "lane": "ESRAND.fillUint32(64)",
+      "batch": 100,
+      "medianOfMedianUs": 4627,
+      "medianUsPerOp": 46.27,
+      "minUsPerOpAcrossRuns": 45.82,
+      "maxUsPerOpAcrossRuns": 46.7,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        45.82,
+        46.7,
+        46.27
+      ]
+    },
+    {
+      "lane": "ESRAND.fillRandom(64)",
+      "batch": 100,
+      "medianOfMedianUs": 10020,
+      "medianUsPerOp": 100.2,
+      "minUsPerOpAcrossRuns": 97.91,
+      "maxUsPerOpAcrossRuns": 102.73,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        97.91,
+        100.2,
+        102.73
+      ]
+    },
+    {
+      "lane": "ESRAND.fillRandom32(64)",
+      "batch": 100,
+      "medianOfMedianUs": 5031,
+      "medianUsPerOp": 50.31,
+      "minUsPerOpAcrossRuns": 49.6,
+      "maxUsPerOpAcrossRuns": 55.65,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        49.6,
+        50.31,
+        55.65
+      ]
+    },
+    {
+      "lane": "ESRAND.fillFloat(64)",
+      "batch": 100,
+      "medianOfMedianUs": 10441,
+      "medianUsPerOp": 104.41,
+      "minUsPerOpAcrossRuns": 103.79,
+      "maxUsPerOpAcrossRuns": 110.54,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        110.54,
+        104.41,
+        103.79
+      ]
+    },
+    {
+      "lane": "ESRAND.fillFloat32(64)",
+      "batch": 100,
+      "medianOfMedianUs": 5617,
+      "medianUsPerOp": 56.17,
+      "minUsPerOpAcrossRuns": 55.36,
+      "maxUsPerOpAcrossRuns": 56.95,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        55.36,
+        56.95,
+        56.17
+      ]
+    },
+    {
+      "lane": "ESRAND.fillBool(64)",
+      "batch": 100,
+      "medianOfMedianUs": 5043,
+      "medianUsPerOp": 50.43,
+      "minUsPerOpAcrossRuns": 49.64,
+      "maxUsPerOpAcrossRuns": 66.26,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        49.64,
+        66.26,
+        50.43
+      ]
+    },
+    {
+      "lane": "ESRAND.fillChance(64,.25)",
+      "batch": 100,
+      "medianOfMedianUs": 10125,
+      "medianUsPerOp": 101.25,
+      "minUsPerOpAcrossRuns": 100.5,
+      "maxUsPerOpAcrossRuns": 105.94,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        100.5,
+        105.94,
+        101.25
+      ]
+    },
+    {
+      "lane": "ESRAND.fillBytes(64)",
+      "batch": 100,
+      "medianOfMedianUs": 2205,
+      "medianUsPerOp": 22.05,
+      "minUsPerOpAcrossRuns": 21.81,
+      "maxUsPerOpAcrossRuns": 22.65,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        21.81,
+        22.05,
+        22.65
+      ]
+    },
+    {
+      "lane": "ESRAND.fillInt(64,0..999)",
+      "batch": 100,
+      "medianOfMedianUs": 6499,
+      "medianUsPerOp": 64.99,
+      "minUsPerOpAcrossRuns": 64.95,
+      "maxUsPerOpAcrossRuns": 72.09,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        64.99,
+        72.09,
+        64.95
+      ]
+    },
+    {
+      "lane": "ESRAND.fillInt(64,-512..511)",
+      "batch": 100,
+      "medianOfMedianUs": 5597,
+      "medianUsPerOp": 55.97,
+      "minUsPerOpAcrossRuns": 53.51,
+      "maxUsPerOpAcrossRuns": 61.8,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        55.97,
+        61.8,
+        53.51
+      ]
+    },
+    {
+      "lane": "ESRAND.fillInt(64,1e12..+999)",
+      "batch": 100,
+      "medianOfMedianUs": 6580,
+      "medianUsPerOp": 65.8,
+      "minUsPerOpAcrossRuns": 65.12,
+      "maxUsPerOpAcrossRuns": 68.34,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        65.12,
+        68.34,
+        65.8
+      ]
+    },
+    {
+      "lane": "ESRAND.getState",
+      "batch": 1000,
+      "medianOfMedianUs": 2353,
+      "medianUsPerOp": 2.353,
+      "minUsPerOpAcrossRuns": 2.326,
+      "maxUsPerOpAcrossRuns": 2.427,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        2.326,
+        2.427,
+        2.353
+      ]
+    },
+    {
+      "lane": "ESRAND.clone",
+      "batch": 100,
+      "medianOfMedianUs": 196,
+      "medianUsPerOp": 1.96,
+      "minUsPerOpAcrossRuns": 1.95,
+      "maxUsPerOpAcrossRuns": 1.97,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        1.97,
+        1.95,
+        1.96
+      ]
+    },
+    {
+      "lane": "facade.uint32",
+      "batch": 1000,
+      "medianOfMedianUs": 1967,
+      "medianUsPerOp": 1.967,
+      "minUsPerOpAcrossRuns": 1.966,
+      "maxUsPerOpAcrossRuns": 1.972,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        1.966,
+        1.972,
+        1.967
+      ]
+    },
+    {
+      "lane": "facade.random53",
+      "batch": 1000,
+      "medianOfMedianUs": 2760,
+      "medianUsPerOp": 2.76,
+      "minUsPerOpAcrossRuns": 2.748,
+      "maxUsPerOpAcrossRuns": 2.895,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        2.76,
+        2.895,
+        2.748
+      ]
+    },
+    {
+      "lane": "facade.int(0,999)",
+      "batch": 1000,
+      "medianOfMedianUs": 3019,
+      "medianUsPerOp": 3.019,
+      "minUsPerOpAcrossRuns": 3.006,
+      "maxUsPerOpAcrossRuns": 3.03,
+      "rejectedTotal": 0,
+      "runUsPerOp": [
+        3.03,
+        3.006,
+        3.019
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+export default {
+  host: 'illustrator',
+  hostTypes: 'Illustrator/2022',
+  entry: 'src/jsx-entry.ts',
+  outfile: 'dist/vendor-esrand.estc.js',
+  globalName: '__ESRAND_ENTRY__',
+  target: 'illustrator',
+  requireTarget: false,
+  sourceLint: true,
+  typecheck: true,
+  normalize: true,
+  compatibilityTransforms: ['esbuild'],
+  compatibilityShims: [],
+  allowedMissingBuiltins: [],
+  allowedGlobalPatches: [],
+  prelude: [],
+  footer: [
+    { file: 'tooling/estc-vendor-footer.js' }
+  ],
+  allowJson: false,
+  allowIncludes: false,
+  live: false,
+  liveLaunch: false
+};

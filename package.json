@@ -1,0 +1,70 @@
+{
+  "name": "esrand",
+  "version": "0.1.0",
+  "description": "ESRAND — deterministic xoshiro128** random streams, unbiased sampling, snapshots, and stream splitting for Adobe ExtendScript ES3",
+  "type": "module",
+  "main": "dist/esrand-core.esm.mjs",
+  "scripts": {
+    "build": "node esrand-build.mjs",
+    "build:release": "npm run build && node tooling/release-build.mjs",
+    "typecheck": "npx tsc --noEmit -p .",
+    "test": "node tests/esrand-test.mjs",
+    "murmur-differential": "node tests/murmur-differential.mjs",
+    "fuzz": "node tests/fuzz.mjs",
+    "statistical": "node tests/statistical.mjs",
+    "determinism-fingerprint": "node tests/determinism-fingerprint.mjs",
+    "benchmark": "node tests/benchmark.mjs",
+    "prelive-verify": "npm run build",
+    "live-verify": "node tests/esrand-live-verify.mjs",
+    "live-verify:minified": "node tests/minified-live-verify.mjs",
+    "prelive-benchmark": "npm run build",
+    "live-benchmark": "node tests/live-benchmark.mjs",
+    "live-benchmark:aggregate": "node tests/live-benchmark-aggregate.mjs --runs 3",
+    "probe:math-random": "node tests/math-random-live.mjs",
+    "verify": "npm run typecheck && npm run build && npm test && npm run murmur-differential && npm run determinism-fingerprint && npm run fuzz && npm run statistical",
+    "release:live-parse": "node tooling/release-live-parse.mjs",
+    "release:gate": "npm run verify && npm run build:release && npm run release:live-parse && node tests/esrand-live-verify.mjs && npm run live-verify:minified",
+    "release:manifest": "node tooling/release-manifest.mjs",
+    "prepublishOnly": "npm run verify"
+  },
+  "files": [
+    "dist/ESRAND.jsx",
+    "dist/ESRAND.min.jsx",
+    "dist/vendor-esrand.js",
+    "dist/vendor-esrand.min.js",
+    "dist/esrand-core.esm.mjs",
+    "src/",
+    "docs/",
+    "evidence/",
+    "tests/",
+    "README.md",
+    "MEASURED-FACTS.md",
+    "LICENSE",
+    "package.json",
+    "tsconfig.json",
+    "esrand-build.mjs"
+  ],
+  "devDependencies": {
+    "esbuild": "^0.28.1",
+    "murmurhash3js": "^3.0.1",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thelabcorner/es-rand.git"
+  },
+  "keywords": [
+    "random",
+    "prng",
+    "xoshiro",
+    "deterministic",
+    "seeded",
+    "extendscript",
+    "es3",
+    "illustrator"
+  ]
+}

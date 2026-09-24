@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-23",
+  "host": "Adobe Illustrator 30.6.0",
+  "engine": "ExtendScript 4.5.6",
+  "timer": "ESTIMER engine lane",
+  "method": "three independent benchmark invocations; each invocation uses 5 warmups and 9 measured ESTIMER samples; aggregate value is median of invocation medians",
+  "invocations": 3,
+  "lanes": [
+    {"lane":"Math.random","batch":1000,"medianOfMediansUsPerOp":0.325,"rangeUsPerOp":[0.323,0.355],"invocationMediansUsPerOp":[0.355,0.325,0.323]},
+    {"lane":"ESRAND.uint32","batch":1000,"medianOfMediansUsPerOp":3.222,"rangeUsPerOp":[3.212,3.397],"invocationMediansUsPerOp":[3.397,3.222,3.212]},
+    {"lane":"ESRAND.random53","batch":1000,"medianOfMediansUsPerOp":6.389,"rangeUsPerOp":[6.341,7.228],"invocationMediansUsPerOp":[7.228,6.389,6.341]},
+    {"lane":"ESRAND.int(0,999)","batch":1000,"medianOfMediansUsPerOp":9.615,"rangeUsPerOp":[9.605,9.661],"invocationMediansUsPerOp":[9.661,9.605,9.615]},
+    {"lane":"ESRAND.shuffle(64)","batch":25,"medianOfMediansUsPerOp":306.72,"rangeUsPerOp":[304.28,307.08],"invocationMediansUsPerOp":[306.72,304.28,307.08]},
+    {"lane":"ESRAND.bytes(64)","batch":100,"medianOfMediansUsPerOp":68.63,"rangeUsPerOp":[68.0,68.99],"invocationMediansUsPerOp":[68.99,68.63,68.0]}
+  ]
+}

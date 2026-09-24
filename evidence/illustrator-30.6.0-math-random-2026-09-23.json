@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-23",
+  "host": "Adobe Illustrator 30.6.0",
+  "engine": "ExtendScript 4.5.6",
+  "sampleCount": 20000,
+  "unique": 14965,
+  "collisions": 5035,
+  "minObserved": 0.00009155273438,
+  "maxObserved": 0.99996948242188,
+  "badRange": 0,
+  "minPositiveSpacing": 0.00003051757812,
+  "gridDenominatorTest": 32768,
+  "grid32768Violations": 0,
+  "timing": {
+    "timer": "ESTIMER",
+    "batch": 10000,
+    "medianUs": 3290,
+    "minUs": 3185,
+    "p95Us": 5579,
+    "samples": 9,
+    "rejected": 0
+  }
+}
