@@ -1,23 +1,23 @@
 #!/usr/bin/env node
 // Exact deterministic parity check in the real Illustrator ExtendScript engine.
-import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { createLegacyComToolV2Runner } from '../../extendscript-toolchain/src/comtool-v2-compat.mjs';
 
 var ROOT = dirname(fileURLToPath(import.meta.url));
 var PROJECT = join(ROOT, '..');
 var VENDOR = process.env.ESRAND_VENDOR_FILE ? join(PROJECT, process.env.ESRAND_VENDOR_FILE) : join(PROJECT, 'dist', 'vendor-esrand.js');
 var ESM = join(PROJECT, 'dist', 'esrand-core.esm.mjs');
-var TOOL = join(PROJECT, '..', 'agent-skills', 'illustrator-com-automation-skill', 'comtool', 'ILLUSTRATOR_COM_TOOL.py');
+var COM = createLegacyComToolV2Runner();
+process.on('exit', function () { try { COM.close(); } catch (ignore) {} });
 
 if (!existsSync(VENDOR)) throw new Error('build first: ' + VENDOR);
 if (!existsSync(ESM)) throw new Error('build first: ' + ESM);
-if (!existsSync(TOOL)) throw new Error('COM tool missing: ' + TOOL);
 
 function runTool(args) {
   try {
-    return execFileSync('python', [TOOL].concat(args), { encoding: 'utf8', timeout: 300000 });
+    return COM.runText(args, { timeoutMs: 300000 });
   } catch (e) {
     return null;
   }

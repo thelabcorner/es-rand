@@ -1,0 +1,70 @@
+{
+  "date": "2026-09-26",
+  "project": "ESRAND",
+  "version": "0.1.0",
+  "issue": "ESTC/esbuild module namespace helper required descriptor APIs unavailable in Illustrator ExtendScript",
+  "rootCause": "The ExtendScript entry exported makeFacade. ESTC/esbuild therefore emitted module namespace helpers using defineProperty/getOwnPropertyDescriptor/getOwnPropertyNames. The entry is now side-effect-only and installs/preserves $.global.ESRAND directly.",
+  "fix": {
+    "jsxEntry": "side-effect-only",
+    "sameVersionReloadPreserved": true,
+    "forbiddenHelperGate": [
+      "defineProperty",
+      "getOwnPropertyDescriptor",
+      "getOwnPropertyNames"
+    ]
+  },
+  "portableVerification": {
+    "typescript": "pass",
+    "unitAssertions": 28277,
+    "murmurDifferential": "2372/2372",
+    "determinismFingerprint": "79f898bd424a75f6d8d53310bf30c1ab4ad790f1cd9011a9c987aa968f2e5b3b",
+    "fuzzChecks": 58334,
+    "statisticalSmokeChecks": 8499,
+    "estcStaticArtifacts": "4/4 pass",
+    "forbiddenHelperArtifacts": "4/4 clean"
+  },
+  "live": {
+    "transport": "COM Tool V2 script.runFile",
+    "comToolRuntimeVersion": "0.1.5.0",
+    "comToolRuntimeInformationalVersion": "0.1.5-dev+229abb816f991cbbf135e5b60aad7db55efe0fb2",
+    "illustratorVersion": "30.6.0",
+    "extendScriptVersion": "4.5.6",
+    "esrandRequestId": "esrand-final-release-artifacts-live-2",
+    "esrandResult": "ESRAND_V2_LIVE_PASS|67|Illustrator=30.6.0|ExtendScript=4.5.6",
+    "downstreamEsuuidRequestId": "esuuid-final-real-esrand-after-fix-1",
+    "downstreamEsuuidResult": "ESUUID_LIVE_PASS|37|Illustrator=30.6.0|ExtendScript=4.5.6",
+    "v1FallbackUsed": false
+  },
+  "artifacts": [
+    {
+      "path": "dist/ESRAND.jsx",
+      "bytes": 37102,
+      "sha256": "ccd7e3fc0d61e20b54ba5ed7f1158a77c7587e9ade0f3c41b7086af14a7d963e"
+    },
+    {
+      "path": "dist/ESRAND.min.jsx",
+      "bytes": 27485,
+      "sha256": "5ded0935ecfb7714d11c713ec402b2db9e4dfcb2439fc2315cbd5c826bd2505f"
+    },
+    {
+      "path": "dist/vendor-esrand.js",
+      "bytes": 37102,
+      "sha256": "ccd7e3fc0d61e20b54ba5ed7f1158a77c7587e9ade0f3c41b7086af14a7d963e"
+    },
+    {
+      "path": "dist/vendor-esrand.min.js",
+      "bytes": 27485,
+      "sha256": "5ded0935ecfb7714d11c713ec402b2db9e4dfcb2439fc2315cbd5c826bd2505f"
+    },
+    {
+      "path": "dist/esrand-core.esm.mjs",
+      "bytes": 50772,
+      "sha256": "1d8fb5eb2ece293e95ccdf2d3eff25ca8a04cfbdfa48398972f6ff138b69b4e1"
+    },
+    {
+      "path": "tests/esrand-v2-live-probe.jsx",
+      "bytes": 3086,
+      "sha256": "6c68685298b18fd3dd982b49df00a32999867ef2bc68dee04b6814d6998a40a5"
+    }
+  ]
+}

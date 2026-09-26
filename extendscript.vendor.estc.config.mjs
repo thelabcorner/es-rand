@@ -14,9 +14,7 @@ export default {
   allowedMissingBuiltins: [],
   allowedGlobalPatches: [],
   prelude: [],
-  footer: [
-    { file: 'tooling/estc-vendor-footer.js' }
-  ],
+  footer: [],
   allowJson: false,
   allowIncludes: false,
   live: false,

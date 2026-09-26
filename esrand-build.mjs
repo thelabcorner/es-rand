@@ -1,22 +1,18 @@
 #!/usr/bin/env node
+import { execFileSync } from 'node:child_process';
 import { buildSync } from 'esbuild';
-import { mkdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readFileSync, unlinkSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 var ROOT = dirname(fileURLToPath(import.meta.url));
 var DIST = join(ROOT, 'dist');
 var ESM_ENTRY = join(ROOT, 'src', 'index.ts');
-var JSX_ENTRY = join(ROOT, 'src', 'jsx-entry.ts');
+var ESTC = join(ROOT, '..', 'extendscript-toolchain', 'bin', 'estc.mjs');
 
 mkdirSync(DIST, { recursive: true });
 
-function stripStrict(path) {
-  var s = readFileSync(path, 'utf8').replace(/"use strict";?\s*/g, '');
-  writeFileSync(path, s);
-  return s;
-}
-
+// Node ESM is a separate host surface and remains an ordinary esbuild bundle.
 buildSync({
   entryPoints: [ESM_ENTRY],
   outfile: join(DIST, 'esrand-core.esm.mjs'),
@@ -27,50 +23,37 @@ buildSync({
   logLevel: 'warning'
 });
 
-// JSX uses a safe one-export entry. This avoids old ExtendScript rejecting
-// module-namespace object keys such as unquoted "float" or "int".
-var bodyPath = join(DIST, '.jsx-entry.js');
-buildSync({
-  entryPoints: [JSX_ENTRY],
-  outfile: bodyPath,
-  bundle: true,
-  format: 'iife',
-  globalName: '__ESRAND_ENTRY__',
-  platform: 'neutral',
-  target: 'es5',
-  logLevel: 'warning'
-});
-var body = stripStrict(bodyPath);
+function estcBuild(config) {
+  execFileSync(process.execPath, [ESTC, 'build', '--config', config], {
+    cwd: ROOT,
+    stdio: 'inherit'
+  });
+}
 
-var standaloneFooter = [
-  'var ESRAND = __ESRAND_ENTRY__.makeFacade();',
-  ''
-].join('\n');
-writeFileSync(join(DIST, 'ESRAND.jsx'), body + '\n' + standaloneFooter);
+function assertNoDescriptorModuleHelpers(path) {
+  var source = readFileSync(path, 'utf8');
+  var forbidden = ['defineProperty', 'getOwnPropertyDescriptor', 'getOwnPropertyNames'];
+  for (var i = 0; i < forbidden.length; i++) {
+    if (source.indexOf(forbidden[i]) !== -1) {
+      throw new Error(
+        'ExtendScript artifact contains forbidden esbuild module helper dependency ' +
+        forbidden[i] + ': ' + path + '. Keep JSX entry points side-effect-only.'
+      );
+    }
+  }
+}
 
-var vendorFooter = [
-  '(function () {',
-  '  var g = null;',
-  '  try { if (typeof $ !== "undefined" && $.global) { g = $.global; } } catch (e1) {}',
-  '  if (!g) { try { g = (function () { return this; })(); } catch (e2) {} }',
-  '  var built = __ESRAND_ENTRY__.makeFacade();',
-  '  if (!g) { __ESRAND_ENTRY__.installed = built; return; }',
-  '  var keep = false;',
-  '  try {',
-  '    var old = g.ESRAND;',
-  '    var na = built.algorithm();',
-  '    var oa = old && typeof old.algorithm === "function" ? old.algorithm() : null;',
-  '    keep = !!(old && typeof old.version === "function" && old.version() === built.version() &&',
-  '      oa && oa.id === na.id && oa.version === na.version && oa.seedVersion === na.seedVersion);',
-  '    if (keep) { built = old; }',
-  '  } catch (e3) { keep = false; }',
-  '  if (!keep) { g.ESRAND = built; }',
-  '  __ESRAND_ENTRY__.installed = built;',
-  '})();',
-  'var ESRAND = __ESRAND_ENTRY__.installed;',
-  ''
-].join('\n');
-writeFileSync(join(DIST, 'vendor-esrand.js'), body + '\n' + vendorFooter);
-try { unlinkSync(bodyPath); } catch (ignore) {}
+// ESTC is the sole ExtendScript emitter. It owns source linting, host-aware
+// typing, ES3 normalization, helper localization, and conservative checking.
+estcBuild('./extendscript.estc.config.mjs');
+estcBuild('./extendscript.vendor.estc.config.mjs');
 
-console.log('[esrand-build] wrote dist/ESRAND.jsx, dist/vendor-esrand.js, dist/esrand-core.esm.mjs');
+copyFileSync(join(DIST, 'ESRAND.estc.jsx'), join(DIST, 'ESRAND.jsx'));
+copyFileSync(join(DIST, 'vendor-esrand.estc.js'), join(DIST, 'vendor-esrand.js'));
+try { unlinkSync(join(DIST, 'ESRAND.estc.jsx')); } catch (ignore) {}
+try { unlinkSync(join(DIST, 'vendor-esrand.estc.js')); } catch (ignore2) {}
+
+assertNoDescriptorModuleHelpers(join(DIST, 'ESRAND.jsx'));
+assertNoDescriptorModuleHelpers(join(DIST, 'vendor-esrand.js'));
+
+console.log('[esrand-build] wrote dist/ESRAND.jsx and dist/vendor-esrand.js via ESTC; wrote dist/esrand-core.esm.mjs for Node');

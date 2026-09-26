@@ -5,7 +5,7 @@ import {
   setState, shuffle, shuffled, split, uint32, version
 } from './index';
 
-export function makeFacade(): any {
+function makeFacade(): any {
   var api: any = {
     version: version,
     algorithm: algorithm,
@@ -45,4 +45,30 @@ export function makeFacade(): any {
   api['float'] = floating;
   api['int'] = integer;
   return api;
+}
+
+function compatibleFacade(value: any, fresh: any): boolean {
+  if (value === null || value === undefined || typeof value.version !== 'function' ||
+      typeof value.algorithm !== 'function') return false;
+  try {
+    var oldAlgorithm = value.algorithm();
+    var newAlgorithm = fresh.algorithm();
+    return value.version() === fresh.version() && oldAlgorithm !== null && oldAlgorithm !== undefined &&
+      newAlgorithm !== null && newAlgorithm !== undefined &&
+      oldAlgorithm.id === newAlgorithm.id && oldAlgorithm.version === newAlgorithm.version &&
+      oldAlgorithm.seedVersion === newAlgorithm.seedVersion;
+  } catch (error) {
+    return false;
+  }
+}
+
+// ExtendScript entry points are deliberately side-effect-only. Exporting even a
+// single binding makes esbuild synthesize a module namespace that depends on
+// Object.defineProperty/getOwnPropertyDescriptor/getOwnPropertyNames. Those are
+// not portable across Adobe's legacy ExtendScript engines.
+var globalObject: any = $.global;
+var freshFacade: any = makeFacade();
+var existingFacade: any = globalObject['ESRAND'];
+if (!compatibleFacade(existingFacade, freshFacade)) {
+  globalObject['ESRAND'] = freshFacade;
 }

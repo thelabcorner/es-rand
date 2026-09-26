@@ -20,7 +20,7 @@ var files = [
 ];
 
 for (var i = 0; i < files.length; i++) {
-  execFileSync(process.execPath, [estc, 'check', files[i], '--no-target', '--live'], {
+  execFileSync(process.execPath, [estc, 'check', files[i], '--no-target', '--live', '--launch'], {
     cwd: ROOT,
     stdio: 'inherit',
     timeout: 300000

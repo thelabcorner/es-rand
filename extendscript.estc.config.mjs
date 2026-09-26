@@ -14,9 +14,7 @@ export default {
   allowedMissingBuiltins: [],
   allowedGlobalPatches: [],
   prelude: [],
-  footer: [
-    { code: 'var ESRAND = __ESRAND_ENTRY__.makeFacade();' }
-  ],
+  footer: [],
   allowJson: false,
   allowIncludes: false,
   live: false,

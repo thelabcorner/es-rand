@@ -158,15 +158,15 @@ ESRAND makes the sequence explicit instead:
 
 | Artifact | Size | Installs | Best for |
 |---|---:|---|---|
-| `ESRAND.min.jsx` | **28,529 B** | fresh `ESRAND` facade | Recommended standalone release build |
-| `vendor-esrand.min.js` | **29,006 B** | `$.global.ESRAND` | Recommended persistent/shared-engine build |
-| `ESRAND.jsx` | **38,156 B** | fresh `ESRAND` facade | Readable standalone debugging |
-| `vendor-esrand.js` | **38,765 B** | `$.global.ESRAND` | Readable persistent-engine debugging |
+| `ESRAND.min.jsx` | **27,485 B** | `$.global.ESRAND`, preserving a compatible facade | Recommended standalone release build |
+| `vendor-esrand.min.js` | **27,485 B** | `$.global.ESRAND`, preserving a compatible facade | Recommended persistent/shared-engine build |
+| `ESRAND.jsx` | **37,102 B** | `$.global.ESRAND`, preserving a compatible facade | Readable standalone debugging |
+| `vendor-esrand.js` | **37,102 B** | `$.global.ESRAND`, preserving a compatible facade | Readable persistent-engine debugging |
 | `esrand-core.esm.mjs` | **50,772 B** | ESM exports | Node reference/tests/tooling |
 
-**Rule of thumb:** use `ESRAND.min.jsx` for a self-contained script and `vendor-esrand.min.js` when multiple scripts share ESRAND through a persistent ExtendScript engine.
+**Rule of thumb:** use `ESRAND.min.jsx` for a self-contained script and `vendor-esrand.min.js` when multiple scripts share ESRAND through a persistent ExtendScript engine. Their runtime facade semantics are intentionally identical; the names distinguish packaging intent.
 
-The official JSX release artifacts are the ESTC-normalized builds. The ordinary `npm run build` command remains the self-contained development/reference build used by portable Node verification; maintainers generate production JSX with `npm run build:release` inside the shared Scripts workspace.
+The official JSX release artifacts are ESTC-normalized builds. `npm run build` emits the Node reference ESM plus readable ESTC JSX/vendor artifacts; `npm run build:release` adds conservative minification and final static portability gates. Both JSX paths intentionally require the shared sibling ESTC workspace.
 
 ---
 
@@ -496,11 +496,11 @@ The live host probe reports no `Math.imul`. ESRAND performs exact low-32-bit mul
 
 The early raw generated JSX failed at the parser when modern tooling materialized those names in unsafe syntactic positions. Public calls such as `rng.float(...)` remain ergonomic; the JSX facade constructs the reserved keys safely, and ESTC rewrites emitted representations to the portable profile.
 
-### Raw esbuild helpers are not the release portability boundary
+### ESTC is the ExtendScript portability boundary
 
-Plain esbuild IIFE output uses descriptor helpers such as `Object.defineProperty`. Illustrator 30.6 provides those APIs, but ESRAND does not rely on that version-specific fact for its official distribution.
+An exported esbuild/ESTC entry can synthesize module-namespace helpers around APIs such as `Object.defineProperty`, `Object.getOwnPropertyDescriptor`, and `Object.getOwnPropertyNames`. A live Illustrator 30.6.0 / ExtendScript 4.5.6 V2 probe demonstrated that the descriptor path is not available there, so syntactically valid output can still be runtime-invalid.
 
-The release pipeline therefore runs the JSX build through the shared **ExtendScript Toolchain (ESTC)**, which localizes generated helper dependencies and rejects unsupported output before release.
+ESRAND therefore makes its ExtendScript entry **side-effect-only**: it installs or preserves `$.global.ESRAND` directly and exports no entry binding for esbuild to wrap. The build and release-build paths additionally reject any emitted artifact containing those descriptor-helper names. ESTC remains the normalization/type/lint boundary; plain esbuild remains only on the separate Node ESM surface.
 
 ### Persistent engines make stale-build verification possible
 
@@ -534,6 +534,8 @@ npm run release:manifest
 
 `release:gate` performs the portable verification suite, ESTC production build, conservative ExtendScript minification, static ES3 checks, four compile-only live parses, unminified behavioral parity, and minified behavioral parity.
 
+`npm publish` is wired through the same gate via `prepublishOnly`; this is intentional. The publish lifecycle rebuilds and revalidates the same ESTC-owned artifacts that ship to ExtendScript.
+
 ---
 
 ## Repository layout
@@ -559,6 +561,7 @@ tests/
   fuzz.mjs
   statistical.mjs
   esrand-live-verify.mjs
+  esrand-v2-live-probe.jsx
   minified-live-verify.mjs
   live-benchmark.mjs
   live-benchmark-aggregate.mjs
@@ -571,7 +574,6 @@ tooling/
   release-build.mjs
   release-live-parse.mjs
   release-manifest.mjs
-  estc-vendor-footer.js
 ```
 
 ---
@@ -582,7 +584,7 @@ tooling/
 - Explicit numeric seeds are uint32-coerced by contract.
 - Inclusive `int(min,max)` range width is limited to `2^32`, even when endpoints are larger safe integers.
 - Other Adobe ExtendScript hosts have not yet received the same live behavioral certification as Illustrator 30.6.0.
-- Official production JSX is generated by the maintainer release pipeline using the shared ESTC/minification tooling; a standalone clone can run the complete portable Node verification and development build but does not contain that shared maintainer toolchain.
+- ExtendScript JSX builds require the shared sibling ESTC workspace used by the ES* projects. A standalone clone can run the portable Node verification, but canonical JSX emission intentionally has no raw-esbuild fallback.
 - Statistical smoke tests detect gross defects; they do not replace a dedicated statistical-test battery or cryptographic analysis.
 
 ---

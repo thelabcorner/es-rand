@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { execFileSync } from 'node:child_process';
-import { copyFileSync, existsSync, statSync, unlinkSync } from 'node:fs';
+import { copyFileSync, existsSync, readFileSync, statSync, unlinkSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -19,6 +19,20 @@ function need(path, label) {
 
 function run(command, args) {
   execFileSync(command, args, { cwd: ROOT, stdio: 'inherit', timeout: 300000 });
+}
+
+function assertNoDescriptorModuleHelpers(path) {
+  var source = readFileSync(path, 'utf8');
+  var forbidden = [
+    'defineProperty',
+    'getOwnPropertyDescriptor',
+    'getOwnPropertyNames'
+  ];
+  for (var i = 0; i < forbidden.length; i++) {
+    if (source.indexOf(forbidden[i]) !== -1) {
+      throw new Error('forbidden ExtendScript module helper dependency ' + forbidden[i] + ': ' + path);
+    }
+  }
 }
 
 need(minifier, 'verified ExtendScript minifier');
@@ -53,6 +67,7 @@ var checks = [
 ];
 for (var j = 0; j < checks.length; j++) {
   run(process.execPath, [estc, 'check', checks[j], '--no-target']);
+  assertNoDescriptorModuleHelpers(join(ROOT, checks[j]));
 }
 
 console.log('[release-build] artifacts');

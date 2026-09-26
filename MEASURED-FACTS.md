@@ -21,6 +21,50 @@ Portable verification:
 The statistical lane is a gross-defect detector and avalanche smoke test. It is
 not cryptographic certification.
 
+## ESTC side-effect entry repair — 2026-09-26
+
+A later working-tree ESTC migration temporarily made the JSX entry an exported
+module. ESTC/esbuild then synthesized module-namespace descriptor helpers that
+were syntactically ES3-valid but failed at runtime in Illustrator because the
+required `Object.defineProperty` descriptor path was unavailable.
+
+The repair makes the ExtendScript entry side-effect-only, installs/preserves
+`$.global.ESRAND` directly, and adds a build-time rejection gate for emitted
+`defineProperty`, `getOwnPropertyDescriptor`, and `getOwnPropertyNames` helper
+dependencies.
+
+Portable verification after the repair:
+
+- TypeScript: pass
+- unit/reference suite: **28,277 assertions passed**
+- MurmurHash3 differential: **2,372 / 2,372**
+- determinism fingerprint: unchanged at
+  `79f898bd424a75f6d8d53310bf30c1ab4ad790f1cd9011a9c987aa968f2e5b3b`
+- deterministic/property fuzz: **58,334 checks passed**
+- statistical smoke: **8,499 checks passed**
+- all four current ExtendScript artifacts pass ESTC static ES3 checking
+- forbidden descriptor-helper scan: **4 / 4 artifacts clean**
+
+Current post-repair artifacts:
+
+| Artifact | Bytes |
+|---|---:|
+| `dist/ESRAND.jsx` | **37,102** |
+| `dist/ESRAND.min.jsx` | **27,485** |
+| `dist/vendor-esrand.js` | **37,102** |
+| `dist/vendor-esrand.min.js` | **27,485** |
+| `dist/esrand-core.esm.mjs` | **50,772** |
+
+Live V2 COM Tool evidence on Adobe Illustrator 30.6.0 / ExtendScript 4.5.6:
+
+- ESRAND all-artifact wrapper/determinism probe: **67 / 67 checks passed**
+- same-version facade identity and default-state preservation: pass
+- fresh minified/unminified standalone and vendor loads: pass
+- downstream ESUUID using the real rebuilt ESRAND artifact: **37 / 37 checks passed**
+- no V1 COM fallback was required
+
+Evidence: `evidence/illustrator-30.6.0-estc-wrapper-repair-2026-09-26.json`.
+
 ## Release artifact validation
 
 Environment:
