@@ -19,10 +19,12 @@ var files = [
   'dist/vendor-esrand.min.js'
 ];
 
-for (var i = 0; i < files.length; i++) {
-  execFileSync(process.execPath, [estc, 'check', files[i], '--no-target', '--live', '--launch'], {
+execFileSync(
+  process.execPath,
+  [estc, 'check'].concat(files, ['--no-target', '--live', '--launch']),
+  {
     cwd: ROOT,
     stdio: 'inherit',
     timeout: 300000
-  });
-}
+  }
+);

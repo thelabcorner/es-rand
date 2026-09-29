@@ -45,7 +45,7 @@
     var R = $.global.ESRAND;
     assertTrue(R && typeof R.create === "function" && typeof R.bytes === "function", label + " facade loads");
     assertTrue(typeof ESRAND !== "undefined" && ESRAND === R, label + " bare global binding");
-    assertEq(R.version(), "0.1.0", label + " version");
+    assertEq(R.version(), "0.2.0", label + " version");
     var algorithm = R.algorithm();
     assertEq(algorithm.id, "xoshiro128**", label + " algorithm id");
     assertEq(algorithm.version, 1, label + " algorithm version");

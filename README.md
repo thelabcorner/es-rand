@@ -55,6 +55,21 @@ Deterministic random streams and sampling for ExtendScript.
 **[ESUUID](https://github.com/thelabcorner/es-uuid)**  
 RFC 9562 UUID generation, parsing, and conversion for ExtendScript.
 
+**[ESENV](https://github.com/thelabcorner/es-env)**  
+Environment and capability detection for ExtendScript.
+
+**[ESPATH](https://github.com/thelabcorner/es-path)**  
+Deterministic Windows/POSIX path and RFC 8089 file-URI transformations.
+
+**[ESFS](https://github.com/thelabcorner/es-fs)**  
+Synchronous ExtendScript File/Folder I/O with explicit text, BINARY, and replacement semantics.
+
+**[ESHASH](https://github.com/thelabcorner/es-hash)**  
+CRC-32/ISO-HDLC and SHA-256 for byte strings and UTF-8 text.
+
+**[ESLOG](https://github.com/thelabcorner/es-log)**  
+Structured logging with bounded text and JSONL sinks.
+
 </td>
 <td width="50%" valign="top">
 
@@ -80,6 +95,9 @@ Native state and durable storage for Adobe tooling.
 
 **[COMTool](https://github.com/thelabcorner/COMTool)**  
 Guarded COM, ExtendScript, plug-in, and debugger automation for Adobe desktop apps.
+
+**ESsemble** <sub>coming soon</sub>  
+Typed framework, resolver, and composition layer for the ExtendScript toolkit.
 
 **ESOBF** <sub>coming soon</sub>  
 Obfuscation for hardened JSX distribution.
@@ -165,11 +183,18 @@ ESRAND makes the sequence explicit instead:
 | `vendor-esrand.min.js` | **27,485 B** | `$.global.ESRAND`, preserving a compatible facade | Recommended persistent/shared-engine build |
 | `ESRAND.jsx` | **37,102 B** | `$.global.ESRAND`, preserving a compatible facade | Readable standalone debugging |
 | `vendor-esrand.js` | **37,102 B** | `$.global.ESRAND`, preserving a compatible facade | Readable persistent-engine debugging |
+| `ESRAND.facade.jsx` | **37,189 B** | Loader-free `$.global.ESRAND` activation | ESPACK v2 library-composition input |
+| `ESRAND.manifest.json` | **50,878 B** | Exact facade bytes, SHA-256, activation contract, provenance | Build-time dependency input for composed consumers such as ESUUID |
 | `esrand-core.esm.mjs` | **50,772 B** | ESM exports | Node reference/tests/tooling |
 
 **Rule of thumb:** use `ESRAND.min.jsx` for a self-contained script and `vendor-esrand.min.js` when multiple scripts share ESRAND through a persistent ExtendScript engine. Their runtime facade semantics are intentionally identical; the names distinguish packaging intent.
 
-The official JSX release artifacts are ESTC-normalized builds. `npm run build` emits the Node reference ESM plus readable ESTC JSX/vendor artifacts; `npm run build:release` adds conservative minification and final static portability gates. Both JSX paths intentionally require the shared sibling ESTC workspace.
+The official JSX release artifacts are ESTC-normalized builds. `npm run build`
+also emits the ESPACK v2 facade/manifest pair. That sidecar is **not** loaded by
+ESRAND at runtime; it lets a downstream composer resolve ESRAND by stable
+identity/version, verify its exact facade hash, and activate it before a
+consumer such as ESUUID. `npm run build:release` adds conservative
+minification and final static portability gates.
 
 ---
 

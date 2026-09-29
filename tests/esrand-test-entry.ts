@@ -538,7 +538,7 @@ throws(function (): void { fillU.fillUint32(null as any, 1); }, 'fill null targe
 throws(function (): void { fillU.fillUint32([], -1); }, 'negative fill count rejected');
 
 // ---- metadata / facade --------------------------------------------------------
-eq(ESRAND.version(), '0.1.0', 'package version');
+  eq(ESRAND.version(), '0.2.0', 'package version');
 var alg = ESRAND.algorithm();
 eq(alg.id, 'xoshiro128**', 'algorithm id');
 eq(alg.version, 1, 'algorithm version');

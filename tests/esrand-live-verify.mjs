@@ -3,21 +3,20 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { createLegacyComToolV2Runner } from '../../extendscript-toolchain/src/comtool-v2-compat.mjs';
+import { createComToolRunner } from '../../extendscript-toolchain/src/comtool-compat.mjs';
 
 var ROOT = dirname(fileURLToPath(import.meta.url));
 var PROJECT = join(ROOT, '..');
 var VENDOR = process.env.ESRAND_VENDOR_FILE ? join(PROJECT, process.env.ESRAND_VENDOR_FILE) : join(PROJECT, 'dist', 'vendor-esrand.js');
 var ESM = join(PROJECT, 'dist', 'esrand-core.esm.mjs');
-var COM = createLegacyComToolV2Runner();
-process.on('exit', function () { try { COM.close(); } catch (ignore) {} });
+var COM = createComToolRunner();
 
 if (!existsSync(VENDOR)) throw new Error('build first: ' + VENDOR);
 if (!existsSync(ESM)) throw new Error('build first: ' + ESM);
 
-function runTool(args) {
+async function runTool(args) {
   try {
-    return COM.runText(args, { timeoutMs: 300000 });
+    return await COM.runText(args, { timeoutMs: 300000 });
   } catch (e) {
     return null;
   }
@@ -27,7 +26,7 @@ function skip(message) {
   process.exit(2);
 }
 
-var statusRaw = runTool(['status', '--no-launch']);
+var statusRaw = await runTool(['status', '--no-launch']);
 if (statusRaw === null) skip('Illustrator not reachable via COM');
 var status;
 try { status = JSON.parse(statusRaw.trim()); } catch (e) { skip('status output was not JSON'); }
@@ -185,7 +184,7 @@ var source = [
 ].join('\n');
 writeFileSync(probe, source);
 
-var raw = runTool(['eval', '--file', probe.replace(/\\/g, '/')]);
+var raw = await runTool(['eval', '--file', probe.replace(/\\/g, '/')]);
 if (raw === null) skip('Illustrator became unavailable during eval');
 var env;
 try { env = JSON.parse(raw.trim()); } catch (e) { throw new Error('live output not JSON: ' + raw.slice(0,500)); }
@@ -213,3 +212,4 @@ exact('reload preserves default state', got.reload.after, got.reload.before);
 
 console.log('live-verify: ' + (checks-failures) + '/' + checks + ' exact groups on ' + got.host + ' / ExtendScript ' + got.engine);
 if (failures) process.exit(1);
+await COM.close();

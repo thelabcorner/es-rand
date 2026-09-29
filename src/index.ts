@@ -3,7 +3,7 @@ import { autoSeedWords, stateFromSeed, stateFromSeedInto } from './seed';
 import { AlgorithmInfo, CapabilityReport, RandGenerator, RandSnapshot, Seed } from './types';
 import { U32_SIZE, MAX_SAFE_INTEGER_ES } from './u32';
 
-var PACKAGE_VERSION = '0.1.0';
+var PACKAGE_VERSION = '0.2.0';
 var defaultGenerator: RandGenerator | null = null;
 var createStateScratch: number[] = [];
 var createStateScratchBusy = false;

@@ -16,6 +16,8 @@ if (!match) throw new Error('could not read determinism fingerprint');
 var artifactPaths = [
   'dist/ESRAND.jsx',
   'dist/ESRAND.min.jsx',
+  'dist/ESRAND.facade.jsx',
+  'dist/ESRAND.manifest.json',
   'dist/vendor-esrand.js',
   'dist/vendor-esrand.min.js',
   'dist/esrand-core.esm.mjs'

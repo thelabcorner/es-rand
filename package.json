@@ -1,6 +1,6 @@
 {
   "name": "esrand",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "ESRAND — deterministic xoshiro128** random streams, unbiased sampling, snapshots, and stream splitting for Adobe ExtendScript ES3",
   "type": "module",
   "main": "dist/esrand-core.esm.mjs",
@@ -25,11 +25,16 @@
     "release:live-parse": "node tooling/release-live-parse.mjs",
     "release:gate": "npm run verify && npm run build:release && npm run release:live-parse && node tests/esrand-live-verify.mjs && npm run live-verify:minified",
     "release:manifest": "node tooling/release-manifest.mjs",
-    "prepublishOnly": "npm run release:gate"
+    "prepublishOnly": "npm run release:gate",
+    "verify:engine": "npm run release:live-parse && npm run live-verify && npm run live-verify:minified",
+    "ci:static": "npm run verify",
+    "ci:local": "npm run ci:static && npm run verify:engine"
   },
   "files": [
     "dist/ESRAND.jsx",
     "dist/ESRAND.min.jsx",
+    "dist/ESRAND.facade.jsx",
+    "dist/ESRAND.manifest.json",
     "dist/vendor-esrand.js",
     "dist/vendor-esrand.min.js",
     "dist/esrand-core.esm.mjs",
