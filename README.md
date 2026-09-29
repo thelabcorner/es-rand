@@ -11,7 +11,7 @@
 [![MurmurHash3](https://img.shields.io/badge/MurmurHash3-2%2C372%2F2%2C372-purple)](#validation)
 [![Illustrator](https://img.shields.io/badge/Illustrator%2030.6.0-11%2F11%20live-success)](#compatibility)
 [![Engine](https://img.shields.io/badge/ExtendScript-ES3-green)](#compatibility)
-[![Size](https://img.shields.io/badge/vendor.min-28.3%20KB-orange)](#which-artifact-should-i-use)
+[![Size](https://img.shields.io/badge/vendor.min-27.5%20KB-orange)](#which-artifact-should-i-use)
 [![License](https://img.shields.io/badge/license-GPL%203.0--or--later-blue)](LICENSE)
 
 </div>
