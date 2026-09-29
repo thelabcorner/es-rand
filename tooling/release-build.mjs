@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, readFileSync, statSync, unlinkSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,7 +9,31 @@ var SCRIPTS = dirname(ROOT);
 var minifier = join(SCRIPTS, 'agent-skills', 'adobe-extendscript-minification', 'scripts', 'minify-jsx.py');
 var minConfig = join(SCRIPTS, 'agent-skills', 'adobe-extendscript-minification', 'configs', 'conservative.json');
 var estc = join(SCRIPTS, 'extendscript-toolchain', 'bin', 'estc.mjs');
-var python = process.env.ESRAND_PYTHON || 'python';
+function resolvePython() {
+  if (process.env.ESRAND_PYTHON) {
+    return { command: process.env.ESRAND_PYTHON, prefix: [] };
+  }
+  var candidates = process.platform === 'win32'
+    ? [
+        { command: 'py.exe', prefix: ['-3'] },
+        { command: 'python.exe', prefix: [] },
+        { command: 'python3.exe', prefix: [] }
+      ]
+    : [
+        { command: 'python3', prefix: [] },
+        { command: 'python', prefix: [] }
+      ];
+  for (var i = 0; i < candidates.length; i++) {
+    var probe = spawnSync(candidates[i].command, candidates[i].prefix.concat(['--version']), {
+      cwd: ROOT,
+      stdio: 'ignore'
+    });
+    if (!probe.error && probe.status === 0) return candidates[i];
+  }
+  throw new Error('Python 3 interpreter not found; set ESRAND_PYTHON to an executable path');
+}
+
+var python = resolvePython();
 
 function need(path, label) {
   if (!existsSync(path)) {
@@ -56,7 +80,7 @@ var jobs = [
 ];
 
 for (var i = 0; i < jobs.length; i++) {
-  run(python, [minifier, '--in', jobs[i][0], '--config', minConfig, '--out', jobs[i][1]]);
+  run(python.command, python.prefix.concat([minifier, '--in', jobs[i][0], '--config', minConfig, '--out', jobs[i][1]]));
 }
 
 var checks = [
