@@ -200,18 +200,19 @@ minification and final static portability gates.
 
 ## Get the Release
 
-**[ESRAND v0.1.0](https://github.com/thelabcorner/es-rand/releases/tag/v0.1.0)** is the first public release.
+The current stable release is **[ESRAND v0.2.0](https://github.com/thelabcorner/es-rand/releases/tag/v0.2.0)**.
 
 Release assets:
 
 - `ESRAND.min.jsx` — recommended standalone ExtendScript bundle;
 - `vendor-esrand.min.js` — recommended persistent-engine vendor bundle;
 - `ESRAND.jsx` and `vendor-esrand.js` — readable ESTC-normalized counterparts;
+- `ESRAND.facade.jsx` and `ESRAND.manifest.json` — ESPACK 0.5 manifest-v2 composition inputs;
 - `esrand-core.esm.mjs` — Node/reference ESM build;
-- `esrand-v0.1.0.lock.json` — tag, commit, determinism fingerprint, sizes, and per-artifact SHA-256;
+- `esrand-v0.2.0.lock.json` — tag, commit, determinism fingerprint, sizes, and per-artifact SHA-256;
 - `SHA256SUMS.txt` — release-asset checksums.
 
-For reproducible production use, pin the **v0.1.0** tag or release asset rather than a mutable branch.
+For reproducible production use, pin the **v0.2.0** tag or release asset rather than a mutable branch.
 
 ---
 
